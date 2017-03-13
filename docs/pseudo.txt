@@ -1,0 +1,15 @@
+WHILE  the Number of Launched Tasks is greater or equal to the Number of CPUs per Task and the Number of Remaining Memory is greater or equal to the Amount of Memory per Task
+	Increase POTENTIAL_TASKS
+END WHILE
+
+IF POTENTIAL_TASKS >= REQUIRED_TASKS
+	Accept offer
+	ACCEPTED_TASKS = POTENTIAL_TASKS
+	WHILE ACCEPTED_TASKS > 0
+		Initialize new taskId
+		Initialize new task
+		Launch task
+		Decrement ACCEPTED_TASKS
+	END WHILE
+ELSE
+	Reject offer

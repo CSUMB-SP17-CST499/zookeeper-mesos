@@ -7,7 +7,7 @@ project, and are releasing it Open Source so that everyone can benefit from it.
 
 # Documentation 
 
-Documentation is available in the docs/ directory.
+Documentation is available in the docs/directory.
 
 # License
 
