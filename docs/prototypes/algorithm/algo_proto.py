@@ -1,5 +1,7 @@
 # Task and Offers class from task.py
-from task import *
+from task import * 
+# Let's try out cmd https://docs.python.org/3.5/library/cmd.html
+import cmd
 
 # Read in tasks and turn into list of lists
 # Comprehension splits line removes comma and converts to int
@@ -25,16 +27,31 @@ tasks.sort(key=lambda t: t.cpu,reverse=True)
 offers = [Offer(args[0],args[1])  for args in f_offers]
 offers.sort(key=lambda t: t.cpu,reverse=True)
 
+#Based off of example from python docs
+class SchedulerShell(cmd.Cmd):
+	intro = 'Welcome to the example scheduling algorithm.   Type help or ? to list commands.\n'
+	prompt = '> '
+	
+	def do_quit(self, args):
+		'Quits the example.'
+		raise SystemExit
+	
+	def do_tasks(self, args):
+		'Lists tasks held in memory.'
+		for index,task in enumerate(tasks):
+			print("Task: "+str(index))
+			print(task)
+	
+	def do_offers(self, args):
+		'Lists offers held in memory.'
+		for index,offer in enumerate(offers):
+			print("Offer: "+str(index))
+			print(offer)
+	
+def i_parser(args):
+	'Convert a series of zero or more numbers to an argument tuple'
+	return tuple(map(int, arg.split()))
 
-# Uncomment to see Tasks as json
-for index,task in enumerate(tasks):
-	print("Task: "+str(index))
-	print(task)
+if __name__ == '__main__':
+	SchedulerShell().cmdloop()
 
-#Delineation between Tasks and Offers
-print("\n-----------------------------------\n")
-
-# Uncomment to see Offers as json
-for index,offers in enumerate(offers):
-	print("Offer: "+str(index))
-	print(offers)
