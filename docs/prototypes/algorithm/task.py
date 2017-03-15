@@ -17,3 +17,16 @@ class Offer:
 		
 	def __str__(self):
 		return "{\n\t"+"'cpu': "+str(self.cpu)+",\n\t"+"'memory': "+str(self.mem)+"\n}"
+		
+class Match:
+	def __init__(self, task, offer):
+		self.task = task
+		self.offer = offer
+		
+	def __str__(self):
+		return ("    Task    |    Offer    \n"+
+				"--------------------------\n"+
+				" cpu   |  "+str(self.task.cpu)+"  |  "+str(self.offer.cpu)+"  |   cpu \n"
+				+" mem   |  "+str(self.task.mem)+"  |  "+str(self.offer.mem)+"  |   mem \n"
+				+" prio  |  "+str(self.task.prio)+"  |     |  prio \n"
+				+" elev  |  "+str(self.task.elev)+"  |     |  elev \n")

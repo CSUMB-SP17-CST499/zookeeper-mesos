@@ -11,8 +11,19 @@ print(offers)
 print(tasks)
 print(offer_matrix)
 
-for x in range(0,len(offers)):
-	for y in range(x,len(offers)-1):
-		if( offer_matrix[x]==1 and offer_matrix[len(offers)+1+y]==1):
-			print(offers[x],offers[y+1])
+skip = 0
+pairs = []
+for x in range(0,len(tasks)):
+	for y in range(skip,len(offers)):
+		if(len(pairs) == len(tasks)):
+			continue
+		if(tasks[x] <= offers[y]):
+			skip += 1
+			pairs.append([tasks[x],offers[y]])
+			continue
+print(pairs)
+# for x in range(0,len(offers)):
+	# for y in range(x,len(offers)-1):
+		# if( offer_matrix[x]==1 and offer_matrix[len(offers)+1+y]==1):
+			# print(offers[x],offers[y+1])
 #print(offer_permutations)

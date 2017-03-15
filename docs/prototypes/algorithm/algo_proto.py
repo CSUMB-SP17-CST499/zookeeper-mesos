@@ -65,6 +65,26 @@ class SchedulerShell(cmd.Cmd):
 		'Removes offer specified by you. Call by offer id: rm_offer 0'
 		del offers[parse(arg)[0]]
 		
+	def do_sl_cpu(self,arg):
+		'Solves task - offer resolution based on cpu'
+		skip = 0
+		matches = []
+		for x in range(0,len(tasks)):
+			if(len(matches) == len(tasks)):
+					break
+			for y in range(skip,len(offers)):
+				if(len(matches) == len(tasks)):
+					break
+				if(tasks[x].cpu <= offers[y].cpu):
+					skip += 1
+					matches.append(Match(tasks[x],offers[y]))
+					break
+		for index,match in enumerate(matches):
+			print("Match: "+str(index))
+			print(match)
+			tasks.remove(match.task)
+			offers.remove(match.offer)
+		
 def parse(arg):
 	'Convert a series of zero or more numbers to an argument list'
 	return list(map(int, arg.split()))
