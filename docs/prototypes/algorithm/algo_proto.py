@@ -21,36 +21,46 @@ f_reader.close()
 # Comprehension to create class objects
 # Would be nice to assign parameters better
 tasks = [Task(args[0],args[1],args[2],args[3])  for args in f_tasks]
-tasks.sort(key=lambda t: t.cpu,reverse=True)
+tasks.sort(key=lambda x: x.cpu,reverse=True)
 
 # Same as above with less parameters
 offers = [Offer(args[0],args[1])  for args in f_offers]
-offers.sort(key=lambda t: t.cpu,reverse=True)
+offers.sort(key=lambda x: x.cpu,reverse=True)
 
 #Based off of example from python docs
 class SchedulerShell(cmd.Cmd):
 	intro = 'Welcome to the example scheduling algorithm.   Type help or ? to list commands.\n'
 	prompt = '> '
 	
-	def do_quit(self, args):
+	def do_quit(self, arg):
 		'Quits the example.'
 		raise SystemExit
 	
-	def do_tasks(self, args):
+	def do_tasks(self, arg):
 		'Lists tasks held in memory.'
 		for index,task in enumerate(tasks):
 			print("Task: "+str(index))
 			print(task)
 	
-	def do_offers(self, args):
+	def do_offers(self, arg):
 		'Lists offers held in memory.'
 		for index,offer in enumerate(offers):
 			print("Offer: "+str(index))
 			print(offer)
 	
-def i_parser(args):
-	'Convert a series of zero or more numbers to an argument tuple'
-	return tuple(map(int, arg.split()))
+	def do_add_task(self,arg):
+		'Adds task specified by you. cpu,memory,priority,elevation_time: add_task 6 3 1 5'
+		tasks.append(Task(*parse(arg)))
+		tasks.sort(key=lambda x: x.cpu,reverse=True)
+	
+	def do_add_offer(self,arg):
+		'Adds offer specified by you. cpu,memory: add_offer 7 2'
+		offers.append(Offer(*parse(arg)))
+		offers.sort(key=lambda x: x.cpu,reverse=True)
+		
+def parse(arg):
+	'Convert a series of zero or more numbers to an argument list'
+	return list(map(int, arg.split()))
 
 if __name__ == '__main__':
 	SchedulerShell().cmdloop()
