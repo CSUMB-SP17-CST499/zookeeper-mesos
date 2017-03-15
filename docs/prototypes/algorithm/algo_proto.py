@@ -19,12 +19,11 @@ f_reader.close()
 # print(f_offers)
 
 # Comprehension to create class objects
-# Would be nice to assign parameters better
-tasks = [Task(args[0],args[1],args[2],args[3])  for args in f_tasks]
+tasks = [Task(*args)  for args in f_tasks]
 tasks.sort(key=lambda x: x.cpu,reverse=True)
 
 # Same as above with less parameters
-offers = [Offer(args[0],args[1])  for args in f_offers]
+offers = [Offer(*args)  for args in f_offers]
 offers.sort(key=lambda x: x.cpu,reverse=True)
 
 #Based off of example from python docs
@@ -52,11 +51,19 @@ class SchedulerShell(cmd.Cmd):
 		'Adds task specified by you. cpu,memory,priority,elevation_time: add_task 6 3 1 5'
 		tasks.append(Task(*parse(arg)))
 		tasks.sort(key=lambda x: x.cpu,reverse=True)
+		
+	def do_rm_task(self,arg):
+		'Removes task specified by you. Call by task id: rm_task 0'
+		del tasks[parse(arg)[0]]
 	
 	def do_add_offer(self,arg):
 		'Adds offer specified by you. cpu,memory: add_offer 7 2'
 		offers.append(Offer(*parse(arg)))
 		offers.sort(key=lambda x: x.cpu,reverse=True)
+		
+	def do_rm_offer(self,arg):
+		'Removes offer specified by you. Call by offer id: rm_offer 0'
+		del offers[parse(arg)[0]]
 		
 def parse(arg):
 	'Convert a series of zero or more numbers to an argument list'
