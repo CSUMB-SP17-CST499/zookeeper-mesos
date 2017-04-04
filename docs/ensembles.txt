@@ -26,3 +26,6 @@ server.<server number>=<server ip>:<peers port>:<leader port>
 
 In the case that you want to run all servers in the ensemble on one machine simply increment the ports for each successive server.
 
+Run the .cfg with bin/zkServer.sh start
+
+Summary of: https://zookeeper.apache.org/doc/trunk/zookeeperStarted.html
