@@ -171,10 +171,41 @@ public:
   }
  
   // generating master command
-  
   std::string generate_master(vector<string> agents, vector<string> masters, string self)
   {
+	std::ifstream f("setup.sh");
+	std::string setup((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());	
+
+	// add dataDir to setup
+	// first must find from conf
+	string conf = generate_conf(masters);
+	// find dataDir line
+	string dataDir_line;
+	std::istringstream line(conf);
+	string dataDir;
+	while(std::getline(line, dataDir_line))
+	{
+		if(dataDir_line.find("dataDir") != std::string::npos)
+		{
+			dataDir = dataDir_line.substr(dataDir_line.find("dataDir")+8);
+		}
+	}
 	
+	// add dataDir to setup.sh
+	setup.replace(setup.find("%d"), string("%d").length(), dataDir);
+		
+	// add myid to setup.sh
+	// find self hostname -> add vector index to myid
+	int id = find(masters.begin(), masters.end(), self) - masters.begin();
+	string create_command = "touch $dataDir/myid;\n";
+	string echo_command = "echo " + std::to_string(id+1) + " > $dataDir/myid;\n";
+	setup.replace(setup.find("%t"), string("%t").length(), create_command + echo_command);
+	
+
+	// add conf to setup script
+	setup.replace(setup.find("%s"), string("%s").length(), conf);
+	cout << setup << endl;
+	exit(1);
 	return "touch /home/mekeeper/master";
 
   }
@@ -183,6 +214,8 @@ public:
   std::string generate_agent(vector<string> masters, string self)
   {
 
+	std::ifstream f("setup.sh");
+	std::string setup((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());	
 	return "touch /home/mekeeper/agent";
 
   }
