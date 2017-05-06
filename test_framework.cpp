@@ -205,7 +205,7 @@ public:
 	// add conf to setup script
 	setup.replace(setup.find("%s"), string("%s").length(), conf);
 	cout << setup << endl;
-	return "touch /home/mekeeper/master";
+	return setup;
 
   }
   
@@ -233,12 +233,11 @@ public:
 
 	// add conf to setup script
 	setup.replace(setup.find("%s"), string("%s").length(), conf);
-	cout << setup << endl;
 
 	// remove myid lines
 	setup.erase(setup.find("%t"), string("%t").length());
 	cout << setup << endl;
-	return "touch /home/mekeeper/agent";
+	return setup;
 
   }
 
